@@ -2276,7 +2276,7 @@ function App() {
       <div className="app">
         {!isAuthPage && (
           <div className="sidebar">
-            <div className="sidebar-logo">
+            <div className="sidebar-logo" style={{ cursor: 'pointer' }} onClick={() => setPage(0)}>
               <div className="logo-dot" />
               TOP 1% OS
             </div>
