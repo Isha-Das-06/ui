@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Top 1% OS</title>
+    <script crossorigin src="https://unpkg.com/react@18/umd/react.development.js"></script>
+    <script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+</head>
+<body>
+    <div id="root"></div>
+    <script>
+        // Error handling
+        window.addEventListener('error', function(e) {
+            console.error('JavaScript error:', e.error);
+            document.getElementById('root').innerHTML = '<div style="color:red; padding:20px; font-family:monospace;">Error: ' + e.error.message + '</div>';
+        });
+        
+        // Load the JSX file with proper error handling
+        fetch('top1pct-os.jsx')
+            .then(response => {
+                if (!response.ok) throw new Error('Could not load file: ' + response.status);
+                return response.text();
+            })
+            .then(code => {
+                // Transform and execute the code
+                const transformedCode = Babel.transform(code, {
+                    presets: ['react', 'env'],
+                    plugins: ['transform-modules-umd']
+                }).code;
+                
+                // Execute in a try-catch to catch any runtime errors
+                try {
+                    eval(transformedCode);
+                    console.log('App loaded successfully');
+                } catch (error) {
+                    console.error('Runtime error:', error);
+                    document.getElementById('root').innerHTML = '<div style="color:red; padding:20px; font-family:monospace;">Runtime Error: ' + error.message + '</div>';
+                }
+            })
+            .catch(error => {
+                console.error('Load error:', error);
+                document.getElementById('root').innerHTML = '<div style="color:red; padding:20px; font-family:monospace;">Load Error: ' + error.message + '</div>';
+            });
+    </script>
+</body>
+</html>

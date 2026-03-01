@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Debug</title>
+    <script crossorigin src="https://unpkg.com/react@18/umd/react.development.js"></script>
+    <script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+</head>
+<body>
+    <div id="root"></div>
+    <script type="text/babel">
+        const { useState, useEffect, useRef } = React;
+        
+        // Minimal CSS
+        const css = `
+            * { margin: 0; padding: 0; box-sizing: border-box; }
+            body { background: #080b10; color: #e8eef5; font-family: Arial; }
+            .hero { min-height: 100vh; display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; padding: 60px 40px; }
+            .hero-label { font-family: monospace; font-size: 11px; color: #63d2ff; letter-spacing: 3px; text-transform: uppercase; margin-bottom: 20px; }
+            .hero-title { font-size: 60px; font-weight: 800; line-height: 1.05; margin-bottom: 20px; }
+            .hero-sub { font-size: 16px; color: #8a9ab5; max-width: 560px; line-height: 1.7; margin-bottom: 36px; }
+            .btn { display: inline-flex; align-items: center; gap: 8px; padding: 12px 32px; border-radius: 7px; font-size: 14px; font-weight: 600; cursor: pointer; border: none; margin: 0 6px; }
+            .btn-primary { background: #63d2ff; color: #000; }
+            .btn-ghost { background: transparent; color: #e8eef5; border: 1px solid rgba(255,255,255,0.15); }
+        `;
+        
+        function PageLanding({ onNav }) {
+            return (
+                <div className="hero">
+                    <div className="hero-label">◈ Top 1% Operating System</div>
+                    <h1 className="hero-title">Dominate Your<br/>Peer Group.</h1>
+                    <p className="hero-sub">The only platform that quantifies your competitive edge, models your future, and builds a week-by-week execution plan to reach the top.</p>
+                    <div>
+                        <button className="btn btn-primary" onClick={() => onNav(2)}>Get Your Score →</button>
+                        <button className="btn btn-ghost" onClick={() => onNav(1)}>Sign Up Free</button>
+                    </div>
+                </div>
+            );
+        }
+        
+        function App() {
+            const [page, setPage] = useState(0);
+            
+            return (
+                <>
+                    <style>{css}</style>
+                    {page === 0 && <PageLanding onNav={setPage} />}
+                    {page === 1 && <div style={{padding: '40px', textAlign: 'center'}}><h2>Sign Up Page</h2><button onClick={() => setPage(0)}>Back</button></div>}
+                    {page === 2 && <div style={{padding: '40px', textAlign: 'center'}}><h2>Get Score Page</h2><button onClick={() => setPage(0)}>Back</button></div>}
+                </>
+            );
+        }
+        
+        const root = ReactDOM.createRoot(document.getElementById('root'));
+        root.render(<App />);
+    </script>
+</body>
+</html>
