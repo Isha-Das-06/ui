@@ -2440,14 +2440,6 @@ function PageNotifications() {
 // ─── NAV STRUCTURE ────────────────────────────────────────────────────────────
 const NAV_SECTIONS = [
   {
-    label: "Public", items: [
-      { id: 0, icon: "◈", label: "Landing Page" },
-      { id: 1, icon: "✦", label: "Sign Up" },
-      { id: 2, icon: "→", label: "Login" },
-      { id: 3, icon: "🔑", label: "Forgot Password" },
-    ]
-  },
-  {
     label: "02 · Scoring Dashboard", items: [
       { id: 14, icon: "📊", label: "Score Overview" },
       { id: 15, icon: "🕸️", label: "Radar Graph" },
