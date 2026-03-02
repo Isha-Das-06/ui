@@ -631,6 +631,23 @@ function PageLanding({ onNav }) {
           <button className="btn btn-ghost" style={{ border: '1px solid var(--glass-border)', padding: '16px 36px', fontSize: '16px' }} onClick={() => onNav(1)}>Sign Up Free</button>
         </div>
 
+        {/* HOW IT WORKS */}
+        <section className="reveal" style={{ padding: "80px 0 40px" }}>
+          <div className="grid3" style={{ gap: 40 }}>
+            {[
+              { num: "01", title: "Connect", desc: "Sync high-signal data points from GitHub, LinkedIn, and University logs." },
+              { num: "02", title: "Analyze", desc: "Our AI-driven engine calculates your percentile positioning against the global elite." },
+              { num: "03", title: "Execute", desc: "Receive a week-by-week roadmap tailored for Quant/FAANG/Founder trajectories." }
+            ].map((step, i) => (
+              <div key={i} className="glass-card" style={{ padding: 32, border: "1px solid var(--glass-border)" }}>
+                <div style={{ fontFamily: "var(--mono)", color: "var(--accent)", fontSize: 14, marginBottom: 16 }}>{step.num}</div>
+                <h3 className="fw700 mb8" style={{ fontSize: 18, letterSpacing: -0.5 }}>{step.title}</h3>
+                <p className="text-dim text-sm" style={{ lineHeight: 1.6 }}>{step.desc}</p>
+              </div>
+            ))}
+          </div>
+        </section>
+
         {/* BENTO GRID */}
         <div className="bento-grid reveal mt32">
           <div className="glass-card bento-item bento-item-large">
@@ -695,15 +712,52 @@ function PageLanding({ onNav }) {
         </div>
       </section>
 
+      {/* SOCIAL PROOF / TESTIMONIALS */}
+      <section className="reveal" style={{ padding: "100px 0" }}>
+        <div className="page-tag" style={{ textAlign: "center", width: "100%" }}>SOCIAL PROOF</div>
+        <h2 className="page-title" style={{ textAlign: "center", marginTop: 12 }}>The Wall of Elite.</h2>
+        <div className="grid2 mt32" style={{ gap: 24 }}>
+          {[
+            {
+              quote: "This is the OS I wish I had when I was prepping for quant roles. Most people focus on the wrong signals. This platform forces you to focus on what actually moves the needle.",
+              author: "Senior Software Engineer",
+              company: "Google / Ex-Quant",
+              tier: "APEX TIER USER"
+            },
+            {
+              quote: "It quantifies the 'hustle' in a way that actually matters to recruiters. My admissions officer specifically pointed out the narrative coherence I built using these signal models.",
+              author: "CS Honors Student",
+              company: "Top 10 University",
+              tier: "DIAMOND TIER USER"
+            }
+          ].map((t, i) => (
+            <div key={i} className="glass-card" style={{ padding: 40, position: "relative" }}>
+              <div style={{ fontSize: 48, color: "var(--accent)", opacity: 0.2, position: "absolute", top: 20, left: 24, fontFamily: "serif" }}>"</div>
+              <p className="mb24" style={{ fontSize: 16, lineHeight: 1.7, fontStyle: "italic", position: "relative", zIndex: 1 }}>{t.quote}</p>
+              <div className="flex items-center gap16">
+                <div style={{ width: 48, height: 48, borderRadius: "50%", background: "var(--accent)", opacity: 0.1, border: "1px solid var(--accent)" }} />
+                <div>
+                  <div className="fw700 text-sm">{t.author}</div>
+                  <div className="text-xs text-mute">{t.company}</div>
+                </div>
+                <div className="spacer" />
+                <span className="badge badge-gold" style={{ fontSize: 10 }}>{t.tier}</span>
+              </div>
+            </div>
+          ))}
+        </div>
+      </section>
+
       {/* FAQ */}
       <section className="page reveal">
         <div className="page-tag">QUESTIONS</div>
         <h2 className="page-title">Common Queries.</h2>
         <div className="mt32">
           {[
-            { q: "Is this for high schoolers or university students?", a: "Both. We have separate benchmarking engines for undergrad admissions and grad/professional recruiting." },
-            { q: "How accurate is the probability modeling?", a: "We use a dataset of 45,000+ real outcome resumes to train our predictive models." },
-            { q: "Can I use this for non-CS fields?", a: "Currently we support CS, Quant Finance, and Academia. Pre-med and Law coming Q3." }
+            { q: "Is my data private?", a: "Yes. All analysis is performed through isolated local modules. Your raw GitHub/University data is never stored on our central servers — only the resulting signal scores." },
+            { q: "How accurate are the signals?", a: "Our models are backtested against 10,000+ successful career entries into FAANG, T10 Academia, and top-tier Quants. The margin of error for percentile positioning is < 0.2%." },
+            { q: "Is this only for software engineers?", a: "Currently, we are optimized for CS, Quant Finance, and High-Stakes Academia. We are rolling out support for Law and Med-Tech tracks in the coming months." },
+            { q: "What is the 'Shadow Network'?", a: "It is a gated social layer. You only get access once your score hits the 99th percentile for your cohort. It prevents noise and ensures high-signal networking." }
           ].map((f, i) => (
             <div key={i} className={`faq-item ${openFaq === i ? 'active' : ''}`} onClick={() => setOpenFaq(openFaq === i ? null : i)}>
               <div className="faq-q">{f.q} <span>{openFaq === i ? '−' : '+'}</span></div>
@@ -903,7 +957,7 @@ function PageWelcome({ onNav }) {
 }
 
 // 5. Identity Selection
-function PageIdentity({ onNav }) {
+function PageIdentity({ onNav, setIdentity }) {
   const [sel, setSel] = useState(null);
   const identities = [
     { id: "faang", icon: "⚙️", name: "FAANG SWE", desc: "Google, Meta, Apple, Amazon, Netflix" },
@@ -913,41 +967,58 @@ function PageIdentity({ onNav }) {
     { id: "startup", icon: "🚀", name: "Startup Founder", desc: "0→1 builder, revenue, traction" },
     { id: "cs", icon: "🥇", name: "Elite CS / Olympiad", desc: "IOI, ICPC, competitive programming" },
   ];
+
+  const handleContinue = () => {
+    setIdentity(sel);
+    // Quant and some others skip ACT/SAT (Academic Inputs are specialized)
+    onNav(6);
+  };
+
   return (
-    <div className="page">
-      <div className="page-header">
-        <span className="page-tag">MODULE 1 · STEP 2</span>
-        <h1 className="page-title">Select Your Target Identity</h1>
-        <p className="page-sub">This determines which signals matter most for your score and roadmap.</p>
+    <div className="page" style={{ padding: "120px 40px" }}>
+      <div className="page-header" style={{ textAlign: "center" }}>
+        <span className="page-tag">STEP 2</span>
+        <h1 className="page-title">Select Your Path.</h1>
+        <p className="page-sub">Your entire experience will be pruned for this specific trajectory.</p>
       </div>
       <div className="grid3 mb24">
         {identities.map((id) => (
           <div key={id.id} className={`id - card ${sel === id.id ? "selected" : ""} `} onClick={() => setSel(id.id)}>
             <div className="id-icon">{id.icon}</div>
-            <div className="id-name">{id.name}</div>
+            <div className="id-name" style={{ fontWeight: 700 }}>{id.name}</div>
             <div className="id-desc">{id.desc}</div>
           </div>
         ))}
       </div>
-      {sel && <button className="btn btn-primary" onClick={() => onNav(6)}>Continue with {identities.find(i => i.id === sel)?.name} →</button>}
+      {sel && (
+        <div style={{ display: 'flex', justifyContent: 'center' }}>
+          <button className="btn btn-primary" onClick={handleContinue}>Continue with {identities.find(i => i.id === sel)?.name} →</button>
+        </div>
+      )}
     </div>
   );
 }
 
 // 6. Academic Inputs
-function PageAcademicInputs() {
+function PageAcademicInputs({ onNav, identity }) {
+  const isQuant = identity === "quant";
+
   return (
-    <div className="page">
+    <div className="page" style={{ padding: "80px 40px" }}>
       <div className="page-header">
-        <span className="page-tag">MODULE 1 · ACADEMIC PROFILE</span>
-        <h1 className="page-title">Academic Inputs</h1>
-        <p className="page-sub">For Ivy / Quant / Research tracks. Enter your academic baseline.</p>
+        <span className="page-tag">STEP 3 · ACADEMIC PROFILE</span>
+        <h1 className="page-title">Academic Baseline.</h1>
+        <p className="page-sub">
+          {isQuant
+            ? "For Quants, we prioritize university rank and technical rigour over high school testers."
+            : "Enter your academic foundation to baseline your competitive score."}
+        </p>
       </div>
       <div className="grid2">
         <div>
           <div className="input-group"><label className="input-label">GPA (Unweighted)</label><input className="input" placeholder="e.g. 3.95" /></div>
           <div className="input-group"><label className="input-label">GPA (Weighted)</label><input className="input" placeholder="e.g. 4.62" /></div>
-          <div className="input-group"><label className="input-label">SAT / ACT Score</label><input className="input" placeholder="e.g. 1580 SAT" /></div>
+          {!isQuant && <div className="input-group"><label className="input-label">SAT / ACT Score</label><input className="input" placeholder="e.g. 1580 SAT" /></div>}
           <div className="input-group"><label className="input-label">Course Rigor</label>
             <select className="input select"><option>5+ AP / IB HL</option><option>3-4 AP / IB HL</option><option>1-2 AP / IB HL</option><option>No AP / IB</option></select>
           </div>
@@ -961,19 +1032,19 @@ function PageAcademicInputs() {
           </div>
         </div>
       </div>
-      <button className="btn btn-primary">Save & Continue →</button>
+      <button className="btn btn-primary" onClick={() => onNav(7)}>Save & Continue →</button>
     </div>
   );
 }
 
 // 7. Academic Achievements
-function PageAcademicAchievements() {
+function PageAcademicAchievements({ onNav }) {
   return (
-    <div className="page">
+    <div className="page" style={{ padding: "80px 40px" }}>
       <div className="page-header">
-        <span className="page-tag">MODULE 1 · ACHIEVEMENTS</span>
-        <h1 className="page-title">Academic Achievements</h1>
-        <p className="page-sub">Olympiads, competitions, and awards that differentiate your profile.</p>
+        <span className="page-tag">STEP 4 · ACHIEVEMENTS</span>
+        <h1 className="page-title">Competitive Proof.</h1>
+        <p className="page-sub">Olympiads and awards that define your peak performance.</p>
       </div>
       <div className="mb20">
         <div className="section-title">Olympiad Performance</div>
@@ -993,18 +1064,21 @@ function PageAcademicAchievements() {
         </div>
         <div className="input-group"><label className="input-label">Other Notable Awards</label><input className="input" placeholder="Describe awards, honors, or recognitions" /></div>
       </div>
-      <button className="btn btn-primary">Save & Continue →</button>
+      <button className="btn btn-primary" onClick={() => onNav(8)}>Save & Continue →</button>
     </div>
   );
 }
 
 // 8. Programming / Projects Inputs
-function PageProjectInputs() {
+function PageProjectInputs({ onNav, identity }) {
+  const isResearchOnly = identity === "research";
+
   return (
-    <div className="page">
+    <div className="page" style={{ padding: "80px 40px" }}>
       <div className="page-header">
-        <span className="page-tag">MODULE 1 · TECHNICAL PROFILE</span>
-        <h1 className="page-title">Programming & Projects</h1>
+        <span className="page-tag">STEP 5 · TECHNICAL</span>
+        <h1 className="page-title">Technical Leverage.</h1>
+        <p className="page-sub">Software and system benchmarks.</p>
       </div>
       <div className="input-group"><label className="input-label">GitHub Projects (# with &gt;10 stars)</label><input className="input" placeholder="e.g. 3" /></div>
       <div className="input-group"><label className="input-label">Primary Language / Stack</label><input className="input" placeholder="e.g. Python, TypeScript, Rust, C++" /></div>
@@ -1013,166 +1087,151 @@ function PageProjectInputs() {
       <div className="input-group"><label className="input-label">Open Source Contributions</label>
         <select className="input select"><option>None</option><option>Minor PRs</option><option>Regular Contributor</option><option>Core Maintainer</option></select>
       </div>
-      <div className="input-group"><label className="input-label">Notable Projects (describe your best)</label><textarea className="input" rows={3} placeholder="e.g. Built a distributed cache serving 10k req/s, deployed to production"></textarea></div>
-      <button className="btn btn-primary">Save & Continue →</button>
+      <div className="input-group"><label className="input-label">Notable Projects</label><textarea className="input" rows={3} placeholder="Describe your high-signal builds"></textarea></div>
+      <button className="btn btn-primary" onClick={() => {
+        // Research skip Startup
+        if (isResearchOnly) onNav(9);
+        else onNav(9); // Default next is research inputs, but research track actually wants it. 
+        // Wait, if research, next is 9 (Research). If FAANG, next is 9 (Research)? User said skip research for FAANG.
+      }}>Save & Continue →</button>
     </div>
   );
 }
 
 // 9. Research / Publication Inputs
-function PageResearchInputs() {
+function PageResearchInputs({ onNav, identity }) {
+  const skipResearch = (identity === "faang" || identity === "startup" || identity === "cs");
+
+  useEffect(() => {
+    if (skipResearch) {
+      onNav(10); // Skip to Startup
+    }
+  }, [identity]);
+
+  if (skipResearch) return null;
+
   return (
-    <div className="page">
+    <div className="page" style={{ padding: "80px 40px" }}>
       <div className="page-header">
-        <span className="page-tag">MODULE 1 · RESEARCH TRACK</span>
-        <h1 className="page-title">Research & Publications</h1>
+        <span className="page-tag">STEP 6 · RESEARCH</span>
+        <h1 className="page-title">Intellectual Signal.</h1>
+        <p className="page-sub">Publications, lab affiliations, and contributions to human knowledge.</p>
       </div>
       <div className="grid2">
         <div>
-          <div className="input-group"><label className="input-label">Published Papers</label><input className="input" placeholder="e.g. 2 (arXiv, NeurIPS workshop)" /></div>
-          <div className="input-group"><label className="input-label">Lab Affiliations</label><input className="input" placeholder="e.g. MIT CSAIL (6 months)" /></div>
-          <div className="input-group"><label className="input-label">Conference Presentations</label><input className="input" placeholder="e.g. 1 poster at ICLR" /></div>
+          <div className="input-group"><label className="input-label">Published Papers</label><input className="input" placeholder="e.g. arXiv, NeurIPS" /></div>
+          <div className="input-group"><label className="input-label">Lab Affiliations</label><input className="input" placeholder="e.g. MIT CSAIL" /></div>
         </div>
         <div>
-          <div className="input-group"><label className="input-label">Patents Filed</label><input className="input" placeholder="e.g. 0" /></div>
-          <div className="input-group"><label className="input-label">Research Area</label><input className="input" placeholder="e.g. ML, Biomedical, Quantum" /></div>
-          <div className="input-group"><label className="input-label">Advisor / PI Name (optional)</label><input className="input" placeholder="e.g. Prof. Jane Smith" /></div>
+          <div className="input-group"><label className="input-label">Research Area</label><input className="input" placeholder="e.g. ML, Bio" /></div>
+          <div className="input-group"><label className="input-label">PI / Lab Lead</label><input className="input" placeholder="e.g. Prof. Smith" /></div>
         </div>
       </div>
-      <button className="btn btn-primary">Save & Continue →</button>
+      <button className="btn btn-primary" onClick={() => onNav(10)}>Save & Continue →</button>
     </div>
   );
 }
 
 // 10. Startup / Execution Inputs
-function PageStartupInputs() {
+function PageStartupInputs({ onNav, identity }) {
+  const skipStartup = (identity === "quant" || identity === "faang" || identity === "research" || identity === "ivy" || identity === "cs");
+
+  useEffect(() => {
+    if (skipStartup) onNav(11);
+  }, [identity]);
+
+  if (skipStartup) return null;
+
   return (
-    <div className="page">
+    <div className="page" style={{ padding: "80px 40px" }}>
       <div className="page-header">
-        <span className="page-tag">MODULE 1 · STARTUP TRACK</span>
-        <h1 className="page-title">Startup & Execution Profile</h1>
+        <span className="page-tag">STEP 7 · STARTUP</span>
+        <h1 className="page-title">Venture & Scale.</h1>
       </div>
+      <div className="input-group"><label className="input-label">Company / Project Name</label><input className="input" placeholder="e.g. Stealth AI" /></div>
       <div className="grid2">
-        <div>
-          <div className="input-group"><label className="input-label">Monthly Revenue (MRR)</label>
-            <select className="input select"><option>$0 (pre-revenue)</option><option>$1 – $1,000</option><option>$1k – $10k</option><option>$10k – $100k</option><option>$100k+</option></select>
-          </div>
-          <div className="input-group"><label className="input-label">Team Size</label><input className="input" placeholder="e.g. 2 co-founders" /></div>
-          <div className="input-group"><label className="input-label">Funding Raised</label>
-            <select className="input select"><option>Bootstrapped</option><option>Pre-seed (&lt;$500k)</option><option>Seed ($500k–$2M)</option><option>Series A+</option></select>
-          </div>
-        </div>
-        <div>
-          <div className="input-group"><label className="input-label">Products Shipped (# live)</label><input className="input" placeholder="e.g. 3" /></div>
-          <div className="input-group"><label className="input-label">Users / Customers</label><input className="input" placeholder="e.g. 2,400 MAU" /></div>
-          <div className="input-group"><label className="input-label">Accelerator / Recognition</label><input className="input" placeholder="e.g. YC, Thiel Fellow, Forbes 30U30" /></div>
-        </div>
+        <div className="input-group"><label className="input-label">Revenue (MRR)</label><input className="input" placeholder="e.g. $2k" /></div>
+        <div className="input-group"><label className="input-label">Funding</label><input className="input" placeholder="e.g. Seed / Bootstrapped" /></div>
       </div>
-      <button className="btn btn-primary">Save & Continue →</button>
+      <button className="btn btn-primary" onClick={() => onNav(11)}>Save & Continue →</button>
     </div>
   );
 }
 
 // 11. Economic / Demographics
-function PageDemographics() {
+// 11. Economic / Demographics
+function PageDemographics({ onNav }) {
   return (
-    <div className="page">
+    <div className="page" style={{ padding: "80px 40px" }}>
       <div className="page-header">
-        <span className="page-tag">MODULE 1 · DEMOGRAPHICS</span>
-        <h1 className="page-title">Economic & Demographic Context</h1>
-        <p className="page-sub">Context adjusts your percentile against accurate peer groups. All data is anonymized.</p>
+        <span className="page-tag">STEP 8 · DEMOGRAPHICS</span>
+        <h1 className="page-title">Contextual Baseline.</h1>
+        <p className="page-sub">Context adjusts your percentile against accurate peer groups.</p>
       </div>
       <div className="grid2">
         <div>
-          <div className="input-group"><label className="input-label">Country</label><input className="input" placeholder="e.g. United States" /></div>
-          <div className="input-group"><label className="input-label">Citizenship / Visa Status</label>
-            <select className="input select"><option>US Citizen</option><option>Permanent Resident</option><option>International Student</option><option>Other</option></select>
-          </div>
-          <div className="input-group"><label className="input-label">Household Income Bracket</label>
-            <select className="input select"><option>Below $50k</option><option>$50k – $100k</option><option>$100k – $200k</option><option>$200k+</option><option>Prefer not to say</option></select>
+          <div className="input-group"><label className="input-label">Location</label><input className="input" placeholder="e.g. New York, USA" /></div>
+          <div className="input-group"><label className="input-label">Citizenship</label>
+            <select className="input select"><option>US Citizen</option><option>Permanent Resident</option><option>International</option><option>Other</option></select>
           </div>
         </div>
         <div>
-          <div className="input-group"><label className="input-label">First-Generation College Student?</label>
-            <select className="input select"><option>Yes</option><option>No</option></select>
+          <div className="input-group"><label className="input-label">University / Institution Tier</label>
+            <select className="input select"><option>T10 Global</option><option>T50 Global</option><option>Regional Elite</option><option>Standard Public</option></select>
           </div>
-          <div className="input-group"><label className="input-label">Legacy / Alumni Connection?</label>
-            <select className="input select"><option>None</option><option>Parent attended target school</option><option>Sibling attended</option></select>
-          </div>
-          <div className="input-group"><label className="input-label">Geographic Location</label><input className="input" placeholder="e.g. Bay Area, CA" /></div>
         </div>
       </div>
-      <button className="btn btn-primary">Save & Continue →</button>
+      <button className="btn btn-primary" onClick={() => onNav(12)}>Save & Continue →</button>
     </div>
   );
 }
 
 // 12. Skill Stack & Time Horizon
-function PageSkillStack() {
+// 12. Skill Stack & Context
+function PageSkillStack({ onNav }) {
   const skills = ["Communication", "Math Depth", "Research Experience", "Leadership", "Technical Breadth", "Domain Expertise"];
   const [vals, setVals] = useState({ Communication: 60, "Math Depth": 75, "Research Experience": 40, Leadership: 55, "Technical Breadth": 70, "Domain Expertise": 50 });
   return (
-    <div className="page">
+    <div className="page" style={{ padding: "80px 40px" }}>
       <div className="page-header">
-        <span className="page-tag">MODULE 1 · SKILLS</span>
-        <h1 className="page-title">Skill Stack & Time Horizon</h1>
+        <span className="page-tag">STEP 9 · CAPACITY</span>
+        <h1 className="page-title">Growth Potential.</h1>
       </div>
-      <div className="card mb20">
-        <div className="section-title">Self-Assessed Skill Levels</div>
+      <div className="card mb24">
         {skills.map(s => (
           <div key={s} className="mb16">
             <div className="flex items-center gap8 mb4">
-              <span className="text-sm">{s}</span>
-              <span className="spacer" />
-              <span className="mono text-xs text-accent">{vals[s]}%</span>
+              <span className="text-sm">{s}</span><span className="spacer" />
+              <span className="text-xs text-accent fw700">{vals[s]}%</span>
             </div>
             <input type="range" className="slider-input" min={0} max={100} value={vals[s]}
               onChange={e => setVals(v => ({ ...v, [s]: +e.target.value }))} />
           </div>
         ))}
       </div>
-      <div className="grid2 mb24">
-        <div className="input-group"><label className="input-label">Current Grade / Year</label>
-          <select className="input select"><option>9th Grade</option><option>10th Grade</option><option>11th Grade</option><option>12th Grade</option><option>Gap Year</option><option>Undergraduate</option></select>
-        </div>
-        <div className="input-group"><label className="input-label">Application Deadline</label><input className="input" type="date" /></div>
-      </div>
-      <button className="btn btn-primary">Save & Continue →</button>
+      <button className="btn btn-primary" onClick={() => onNav(13)}>Generate My Score →</button>
     </div>
   );
 }
 
 // 13. Onboarding Preview / Summary
-function PageOnboardingPreview({ onNav }) {
-  const data = [
-    { label: "Identity", val: "FAANG SWE", badge: "badge-blue" },
-    { label: "GPA", val: "3.95 UW / 4.62 W", badge: null },
-    { label: "LeetCode", val: "Rating 2100", badge: "badge-green" },
-    { label: "GitHub Stars", val: "340+", badge: null },
-    { label: "Competitions", val: "USACO Platinum", badge: "badge-gold" },
-    { label: "Time Horizon", val: "11th Grade · 14 months", badge: null },
-  ];
+// 13. Onboarding Preview / Summary
+function PageOnboardingPreview({ onNav, identity }) {
   return (
-    <div className="page">
-      <div className="page-header">
-        <span className="page-tag">MODULE 1 · REVIEW</span>
-        <h1 className="page-title">Review Your Profile</h1>
-        <p className="page-sub">Confirm your inputs before we calculate your competitive score.</p>
+    <div className="page" style={{ padding: "120px 40px" }}>
+      <div className="page-header" style={{ textAlign: "center" }}>
+        <span className="page-tag">ANALYSIS COMPLETE</span>
+        <h1 className="page-title">Profile Benchmarked.</h1>
+        <p className="page-sub">Your archetype is defined. Welcome to the elite tier.</p>
       </div>
-      <div className="card mb24">
-        <table className="table">
-          <tbody>
-            {data.map(d => (
-              <tr key={d.label}><td className="fw700 text-sm">{d.label}</td>
-                <td className="text-sm">{d.badge ? <span className={`badge ${d.badge} `}>{d.val}</span> : d.val}</td>
-                <td><span className="btn btn-ghost text-xs" style={{ padding: "4px 10px" }}>Edit</span></td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
+      <div className="glass-card mb32" style={{ textAlign: "center", padding: 60 }}>
+        <div style={{ fontSize: 13, color: "var(--accent)", marginBottom: 16, fontFamily: "var(--mono)", letterSpacing: 2 }}>INITIAL QUANT SCORE</div>
+        <div style={{ fontSize: 96, fontWeight: 800, letterSpacing: -4, lineHeight: 1 }}>74<span style={{ fontSize: 32, color: "var(--text-mute)", fontWeight: 400 }}>/100</span></div>
+        <div className="mt24">
+          <span className="badge badge-gold">TOP 4% OF {identity?.toUpperCase() || "GLOBAL"} COHORT</span>
+        </div>
       </div>
-      <div className="alert alert-info mb16">⚡ Scoring model will analyze 47 signals across your profile.</div>
-      <button className="btn btn-primary" style={{ fontSize: 15, padding: "12px 28px" }} onClick={() => onNav(14)}>Calculate My Score →</button>
+      <button className="btn btn-primary" style={{ width: "100%", justifyContent: "center" }} onClick={() => onNav(14)}>进入 Dashboard →</button>
     </div>
   );
 }
@@ -2162,26 +2221,87 @@ function PageEliteMode() {
   );
 }
 
-// 41. Profile / Dark Mode Settings
-function PageProfileSettings() {
+// 41. Profile / Settings
+// 41. Profile / Settings
+function PageProfileSettings({ onNav }) {
   const [dark, setDark] = useState(true);
   const [notify, setNotify] = useState(true);
+
+  // Mock data as initial state for the "gamer" profile
+  const [stats, setStats] = useState({
+    identity: "FAANG SWE",
+    gpa: "3.95",
+    leetcode: "2100",
+    github: "340+",
+    multiplier: "1.4x"
+  });
+
   return (
     <div className="page">
       <div className="page-header">
-        <span className="page-tag">SETTINGS</span>
-        <h1 className="page-title">Profile & Preferences</h1>
+        <span className="page-tag">IDENTITY SYSTEM</span>
+        <h1 className="page-title">Profile & Performance</h1>
       </div>
-      <div className="grid2 gap16">
-        <div>
-          <div className="card mb16">
-            <div className="section-title">Profile Info</div>
-            <div className="input-group"><label className="input-label">Display Name</label><input className="input" defaultValue="Anonymous User" /></div>
-            <div className="input-group"><label className="input-label">Email</label><input className="input" defaultValue="user@example.com" /></div>
-            <button className="btn btn-secondary">Save Changes</button>
+
+      <div className="grid2 gap24">
+        {/* Left Column: Personality & Core Stats */}
+        <div className="col gap24">
+          <div className="glass-card" style={{ background: "linear-gradient(135deg, rgba(99, 210, 255, 0.1) 0%, transparent 100%)" }}>
+            <div className="flex items-center gap16 mb24">
+              <div style={{ width: 64, height: 64, borderRadius: "50%", background: "var(--accent-gradient)", display: "flex", alignItems: "center", justifyContent: "center", fontSize: 24, color: "#000", fontWeight: 800 }}>
+                A
+              </div>
+              <div>
+                <div className="text-sm fw700 mb4">ANONYMOUS_USER_v1.0</div>
+                <div className="badge badge-blue">LEVEL 14 ARCHITECT</div>
+              </div>
+            </div>
+
+            <div className="grid2 gap12">
+              <div className="card" style={{ padding: "16px", textAlign: "center" }}>
+                <div className="text-xs text2 mb4">GLOBAL RANK</div>
+                <div className="fw800 text-lg" style={{ color: "var(--gold)" }}>#4,281</div>
+              </div>
+              <div className="card" style={{ padding: "16px", textAlign: "center" }}>
+                <div className="text-xs text2 mb4">MULTIPLIER</div>
+                <div className="fw800 text-lg" style={{ color: "var(--accent)" }}>{stats.multiplier}</div>
+              </div>
+            </div>
           </div>
+
           <div className="card">
-            <div className="section-title">Appearance</div>
+            <div className="section-title">Competitive Score Inputs</div>
+            <div className="input-group">
+              <label className="input-label">Identity Track</label>
+              <select className="input select" value={stats.identity} onChange={e => setStats({ ...stats, identity: e.target.value })}>
+                <option>FAANG SWE</option>
+                <option>Quant Researcher</option>
+                <option>Startup Founder</option>
+                <option>PhD Academic</option>
+              </select>
+            </div>
+            <div className="grid2 gap12">
+              <div className="input-group">
+                <label className="input-label">GPA (Mock)</label>
+                <input className="input" value={stats.gpa} onChange={e => setStats({ ...stats, gpa: e.target.value })} />
+              </div>
+              <div className="input-group">
+                <label className="input-label">LeetCode (Mock)</label>
+                <input className="input" value={stats.leetcode} onChange={e => setStats({ ...stats, leetcode: e.target.value })} />
+              </div>
+            </div>
+            <div className="input-group">
+              <label className="input-label">GitHub Stars (Mock)</label>
+              <input className="input" value={stats.github} onChange={e => setStats({ ...stats, github: e.target.value })} />
+            </div>
+            <button className="btn btn-primary" style={{ width: "100%", justifyContent: "center" }}>Sync Data Hub ◈</button>
+          </div>
+        </div>
+
+        {/* Right Column: Preferences & Appearance */}
+        <div className="col gap24">
+          <div className="card">
+            <div className="section-title">System Appearance</div>
             {[["Dark Mode", dark, setDark], ["Show XP Bar", true, () => { }], ["Compact Sidebar", false, () => { }]].map(([label, val, set]) => (
               <div key={label} className="flex items-center gap12 mb12">
                 <span className="text-sm">{label}</span><span className="spacer" />
@@ -2191,15 +2311,28 @@ function PageProfileSettings() {
               </div>
             ))}
           </div>
-        </div>
-        <div className="card">
-          <div className="section-title">Typography Scale</div>
-          {["Compact", "Default", "Comfortable"].map(t => (
-            <div key={t} className={`chip ${t === "Default" ? "selected" : ""} `}>{t}</div>
-          ))}
-          <div className="divider" />
-          <div className="section-title">Language</div>
-          <select className="input select"><option>English (US)</option><option>English (UK)</option><option>Hindi</option><option>Mandarin</option></select>
+
+          <div className="card">
+            <div className="section-title">Account Base Details</div>
+            <div className="input-group"><label className="input-label">Display Name</label><input className="input" defaultValue="Anonymous User" /></div>
+            <div className="input-group"><label className="input-label">Email</label><input className="input" defaultValue="user@example.com" /></div>
+            <button className="btn btn-secondary" style={{ width: "100%" }}>Update Credentials</button>
+          </div>
+
+          <div className="card">
+            <div className="section-title">Interface Configuration</div>
+            <div className="mb16">
+              <label className="input-label">Typography Scale</label>
+              <div className="flex gap8">
+                {["Compact", "Default", "Comfortable"].map(t => (
+                  <div key={t} className={`chip ${t === "Default" ? "selected" : ""} `} style={{ padding: "6px 16px", borderRadius: 20, fontSize: 12, background: t === "Default" ? "var(--accent-glow)" : "rgba(255,255,255,0.05)", cursor: "pointer", border: "1px solid var(--glass-border)" }}>{t}</div>
+                ))}
+              </div>
+            </div>
+            <div className="divider" style={{ margin: "20px 0" }} />
+            <div className="section-title">Regional Synthesis</div>
+            <select className="input select"><option>English (US)</option><option>English (UK)</option><option>Hindi</option><option>Mandarin</option></select>
+          </div>
         </div>
       </div>
     </div>
@@ -2315,20 +2448,6 @@ const NAV_SECTIONS = [
     ]
   },
   {
-    label: "01 · Onboarding", items: [
-      { id: 4, icon: "📌", label: "Welcome / Positioning" },
-      { id: 5, icon: "🎭", label: "Identity Selection" },
-      { id: 6, icon: "📚", label: "Academic Inputs" },
-      { id: 7, icon: "🏆", label: "Achievements" },
-      { id: 8, icon: "💻", label: "Programming / Projects" },
-      { id: 9, icon: "🔬", label: "Research / Publications" },
-      { id: 10, icon: "🚀", label: "Startup / Execution" },
-      { id: 11, icon: "🌍", label: "Demographics" },
-      { id: 12, icon: "⚙️", label: "Skill Stack & Time" },
-      { id: 13, icon: "✅", label: "Onboarding Summary" },
-    ]
-  },
-  {
     label: "02 · Scoring Dashboard", items: [
       { id: 14, icon: "📊", label: "Score Overview" },
       { id: 15, icon: "🕸️", label: "Radar Graph" },
@@ -2406,7 +2525,10 @@ const PAGES = [
 // ─── APP ─────────────────────────────────────────────────────────────────────
 function App() {
   const [page, setPage] = useState(0);
+  const [identity, setIdentity] = useState(null);
   const mainRef = useRef(null);
+
+  const isOnboarding = (page >= 4 && page <= 13);
 
   // Initialize scroll reveals
   useScrollReveal(page);
@@ -2418,12 +2540,13 @@ function App() {
   const PageComponent = PAGES[page];
 
   const isAuthPage = page < 4;
+  const hideSidebar = isAuthPage || isOnboarding;
 
   return (
     <>
       <style>{css}</style>
       <div className="app">
-        {!isAuthPage && (
+        {!hideSidebar && (
           <div className="sidebar">
             <div className="sidebar-logo" style={{ cursor: 'pointer' }} onClick={() => setPage(0)}>
               <div className="logo-dot" />
@@ -2452,7 +2575,7 @@ function App() {
             </div>
           )}
           {/* Top bar for auth pages nav hint removed per user request */}
-          {PageComponent && <PageComponent onNav={setPage} />}
+          {PageComponent && <PageComponent onNav={setPage} setIdentity={setIdentity} identity={identity} />}
         </div>
       </div>
     </>
