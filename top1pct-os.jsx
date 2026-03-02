@@ -1235,41 +1235,86 @@ function PageOnboardingPreview({ onNav, identity }) {
     </div>
   );
 }
-
 // 14. Overall Score Overview
 function PageScoreOverview({ onNav }) {
+  const metrics = [
+    { label: "Academic Power", val: 88, color: "blue", icon: "🎓", trend: "up" },
+    { label: "Spike Strength", val: 72, color: "gold", icon: "⚡", trend: "stable" },
+    { label: "Execution Velocity", val: 90, color: "green", icon: "🚀", trend: "up" },
+    { label: "Positioning Advantage", val: 78, color: "purple", icon: "🎯", trend: "down" },
+    { label: "Narrative Coherence", val: 65, color: "red", icon: "✍️", trend: "up" },
+  ];
+
   return (
     <div className="page">
       <div className="page-header">
-        <span className="page-tag">MODULE 2 · COMPETITIVE SCORE</span>
-        <h1 className="page-title">Your Top 1% Score</h1>
+        <span className="page-tag">SYSTEM · CORE_METRICS_SCAN</span>
+        <h1 className="page-title">Performance Index</h1>
       </div>
-      <div className="flex gap16 mb24 items-center">
-        <div style={{ background: "var(--bg2)", border: "2px solid var(--accent)", borderRadius: 16, padding: "32px 48px", textAlign: "center" }}>
-          <div style={{ fontFamily: "var(--mono)", fontSize: 72, fontWeight: 700, color: "var(--accent)", lineHeight: 1 }}>84</div>
-          <div className="text-sm text2 mt8">Overall Score</div>
-          <span className="badge badge-gold mt8">Top 7%</span>
+
+      <div className="grid2 gap24 mb32">
+        {/* Main Score Card */}
+        <div className="glass-card" style={{
+          background: "radial-gradient(circle at top right, rgba(99, 210, 255, 0.15), transparent), var(--glass)",
+          display: "flex",
+          flexDirection: "column",
+          alignItems: "center",
+          justifyContent: "center",
+          padding: "48px 24px",
+          border: "1px solid rgba(99, 210, 255, 0.2)",
+          boxShadow: "0 0 40px rgba(0,0,0,0.3)"
+        }}>
+          <div style={{ fontSize: 13, color: "var(--accent)", marginBottom: 16, fontFamily: "var(--mono)", letterSpacing: 4 }}>TOTAL_COMPETITIVE_INDEX</div>
+          <div style={{ position: "relative" }}>
+            <div style={{ fontSize: 120, fontWeight: 800, letterSpacing: -6, lineHeight: 1, color: "var(--text)" }}>
+              84<span style={{ fontSize: 32, color: "var(--text3)", fontWeight: 400 }}>/100</span>
+            </div>
+            <div style={{ position: "absolute", top: -10, right: -20, background: "var(--accent-gradient)", width: 12, height: 12, borderRadius: "50%", boxShadow: "0 0 15px var(--accent)" }} />
+          </div>
+          <div className="mt24">
+            <span className="badge badge-gold" style={{ padding: "8px 20px", fontSize: 14 }}>TOP 7% GLOBAL RANK</span>
+          </div>
         </div>
-        <div className="col" style={{ gap: 12, flex: 1 }}>
-          {[
-            ["Academic Power", 88, "blue"], ["Spike Strength", 72, "gold"],
-            ["Execution Velocity", 90, "green"], ["Positioning Advantage", 78, "purple"],
-            ["Narrative Coherence", 65, "red"],
-          ].map(([label, val, color]) => (
-            <div key={label}>
-              <div className="flex items-center gap8 mb4">
-                <span className="text-sm">{label}</span><span className="spacer" />
-                <span className="mono text-xs text2">{val}</span>
+
+        {/* Sub-Metrics Cards */}
+        <div className="col gap12">
+          {metrics.map((m) => (
+            <div key={m.label} className="card" style={{ padding: "16px 20px", transition: "transform 0.2s" }}>
+              <div className="flex items-center gap12 mb8">
+                <span style={{ fontSize: 18 }}>{m.icon}</span>
+                <span className="text-sm fw700 text2" style={{ letterSpacing: 1 }}>{m.label.toUpperCase()}</span>
+                <span className="spacer" />
+                <span className="mono text-accent fw700">{m.val}</span>
+                <span style={{ fontSize: 10, color: m.trend === "up" ? "var(--accent3)" : m.trend === "down" ? "var(--accent2)" : "var(--text3)" }}>
+                  {m.trend === "up" ? "▲" : m.trend === "down" ? "▼" : "•"}
+                </span>
               </div>
-              <MiniBar val={val} color={color} showPct={false} />
+              <MiniBar val={m.val} color={m.color} showPct={false} />
             </div>
           ))}
         </div>
       </div>
-      <div className="alert alert-warn mb16">📊 You're 6 points away from the Top 1% threshold. Your narrative coherence is your biggest gap.</div>
+
+      {/* Intelligence Briefing Section */}
+      <div className="glass-card mb32" style={{ borderLeft: "4px solid var(--accent2)", padding: "24px 32px" }}>
+        <div className="flex items-center gap12 mb16">
+          <div style={{ width: 8, height: 8, borderRadius: "50%", background: "var(--accent2)", boxShadow: "0 0 10px var(--accent2)" }} />
+          <span className="mono text-xs fw700" style={{ color: "var(--accent2)", letterSpacing: 2 }}>[BRIEFING_SCAN_v4.2]</span>
+        </div>
+        <p className="text-sm text2 mb0" style={{ lineHeight: 1.8, fontFamily: "var(--sans)" }}>
+          Analysis detected a critical divergence in <strong style={{ color: "var(--text)" }}>Narrative Coherence (65)</strong>.
+          While your <strong style={{ color: "var(--accent3)" }}>Execution Velocity (90)</strong> exceeds the 95th percentile,
+          the lack of a unified "archetype" is suppressing your total index. Resolve this to unlock Top 1% status.
+        </p>
+      </div>
+
       <div className="flex gap12">
-        <button className="btn btn-primary" onClick={() => onNav(15)}>View Radar Analysis →</button>
-        <button className="btn btn-secondary" onClick={() => onNav(16)}>Compare to Peers</button>
+        <button className="btn btn-primary" style={{ padding: "14px 28px" }} onClick={() => onNav(15)}>
+          Deep Radar Analysis ◈
+        </button>
+        <button className="btn btn-secondary" style={{ padding: "14px 28px" }} onClick={() => onNav(16)}>
+          Peer Benchmarking
+        </button>
       </div>
     </div>
   );
