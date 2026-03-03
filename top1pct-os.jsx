@@ -3,7 +3,8 @@ const { useState, useEffect, useRef } = React;
 
 // ─── DESIGN TOKENS ───────────────────────────────────────────────────────────
 const css = `
-  @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Outfit:wght@400;600;700;800&family=Space+Mono:wght@400;700&display=swap');
+  @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Outfit:wght@400;600;700;800&family=Space+Mono:wght@400;700&family=Space+Grotesk:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap');
+  @import url('https://fonts.googleapis.com/icon?family=Material+Icons+Round');
 
   *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
@@ -68,6 +69,16 @@ const css = `
   @keyframes pulseGlow {
     0%, 100% { box-shadow: 0 0 20px rgba(99, 210, 255, 0.1); }
     50% { box-shadow: 0 0 40px rgba(99, 210, 255, 0.3); }
+  }
+
+  @keyframes scan {
+    0% { top: -100px; }
+    100% { top: 100%; }
+  }
+
+  @keyframes blink {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0; }
   }
 
   .reveal { opacity: 0; }
@@ -178,6 +189,42 @@ const css = `
   .card:hover { border-color: rgba(99, 210, 255, 0.2); }
   .card-title { font-family: var(--heading); font-size: 18px; font-weight: 700; margin-bottom: 12px; color: var(--text); }
   .card-sub { font-size: 14px; color: var(--text-dim); line-height: 1.6; }
+
+  /* HIGH-FIDELITY UTILS */
+  .text-gradient {
+    background: linear-gradient(135deg, #fff 0%, #94a3b8 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+  .scan-line {
+    background: linear-gradient(to bottom, transparent, rgba(59, 130, 246, 0.1), transparent);
+    height: 100px;
+    width: 100%;
+    position: absolute;
+    animation: scan 4s linear infinite;
+    z-index: 1;
+  }
+  .glass-v2 {
+    background: rgba(255, 255, 255, 0.03);
+    backdrop-filter: blur(12px);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+  }
+  .cursor-blink::after {
+    content: '_';
+    animation: blink 1s step-end infinite;
+    color: var(--accent);
+  }
+  .metric-card-v2 {
+    background: rgba(255, 255, 255, 0.02);
+    border: 1px solid rgba(255, 255, 255, 0.05);
+    border-radius: 24px;
+    padding: 24px;
+    transition: all 0.3s var(--transition);
+  }
+  .metric-card-v2:hover {
+    background: rgba(255, 255, 255, 0.05);
+    border-color: rgba(99, 210, 255, 0.2);
+  }
 
   .alert {
     padding: 20px; border-radius: 12px; font-size: 14px; margin-bottom: 32px;
@@ -1236,85 +1283,101 @@ function PageOnboardingPreview({ onNav, identity }) {
   );
 }
 // 14. Overall Score Overview
+// 14. Overall Score Overview
 function PageScoreOverview({ onNav }) {
   const metrics = [
-    { label: "Academic Power", val: 88, color: "blue", icon: "🎓", trend: "up" },
-    { label: "Spike Strength", val: 72, color: "gold", icon: "⚡", trend: "stable" },
-    { label: "Execution Velocity", val: 90, color: "green", icon: "🚀", trend: "up" },
-    { label: "Positioning Advantage", val: 78, color: "purple", icon: "🎯", trend: "down" },
-    { label: "Narrative Coherence", val: 65, color: "red", icon: "✍️", trend: "up" },
+    { label: "Academic Power", val: 88, color: "#3b82f6", icon: "school", trend: "up", trendChar: "▲" },
+    { label: "Spike Strength", val: 72, color: "#f59e0b", icon: "bolt", trend: "stable", trendChar: "●" },
+    { label: "Execution Velocity", val: 90, color: "#ef4444", icon: "rocket_launch", trend: "up", trendChar: "▲" },
+    { label: "Positioning Advantage", val: 78, color: "#06b6d4", icon: "gps_fixed", trend: "down", trendChar: "▼" },
+    { label: "Narrative Coherence", val: 65, color: "#8b5cf6", icon: "psychology", trend: "up", trendChar: "▲" },
   ];
 
   return (
-    <div className="page">
-      <div className="page-header">
-        <span className="page-tag">SYSTEM · CORE_METRICS_SCAN</span>
-        <h1 className="page-title">Performance Index</h1>
-      </div>
+    <div className="page" style={{ background: "radial-gradient(circle at top right, rgba(59, 130, 246, 0.05), transparent)", minHeight: "100%" }}>
+      <header className="mb48">
+        <div className="flex items-center gap12 mb16 font-mono text-xs tracking-widest text-accent uppercase">
+          <span className="px8 py2 border border-accent/20 rounded">SYSTEM_SCAN</span>
+          <span className="text3">STATUS: OPTIMIZED</span>
+        </div>
+        <h2 className="text-6xl font-extrabold tracking-tighter mb12" style={{ fontFamily: "'Space Grotesk', sans-serif", letterSpacing: "-0.04em" }}>Performance Index</h2>
+      </header>
 
-      <div className="grid2 gap24 mb32">
-        {/* Main Score Card */}
-        <div className="glass-card" style={{
-          background: "radial-gradient(circle at top right, rgba(99, 210, 255, 0.15), transparent), var(--glass)",
-          display: "flex",
-          flexDirection: "column",
-          alignItems: "center",
-          justifyContent: "center",
-          padding: "48px 24px",
-          border: "1px solid rgba(99, 210, 255, 0.2)",
-          boxShadow: "0 0 40px rgba(0,0,0,0.3)"
-        }}>
-          <div style={{ fontSize: 13, color: "var(--accent)", marginBottom: 16, fontFamily: "var(--mono)", letterSpacing: 4 }}>TOTAL_COMPETITIVE_INDEX</div>
-          <div style={{ position: "relative" }}>
-            <div style={{ fontSize: 120, fontWeight: 800, letterSpacing: -6, lineHeight: 1, color: "var(--text)" }}>
-              84<span style={{ fontSize: 32, color: "var(--text3)", fontWeight: 400 }}>/100</span>
+      <div className="grid2 gap32 mb40" style={{ alignItems: "start" }}>
+        {/* Left Column: Big Score Card */}
+        <div className="relative h-[440px] rounded-[3rem] overflow-hidden bg-slate-950 border border-white/10" style={{ background: "#05070a", display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center" }}>
+          <div className="scan-line"></div>
+          <div className="relative z-10 flex flex-col items-center">
+            <p className="text-[11px] font-mono tracking-[0.5em] text-accent uppercase mb40 opacity-60">COMPETITIVE_INDEX_v4</p>
+            <div className="flex items-baseline justify-center mb32">
+              <div className="text-gradient" style={{ fontSize: 160, fontWeight: 800, lineHeight: 0.9, letterSpacing: -10 }}>84</div>
+              <div style={{ fontSize: 32, fontWeight: 300, color: "var(--text-mute)", marginLeft: 4, letterSpacing: -1 }}>/100</div>
             </div>
-            <div style={{ position: "absolute", top: -10, right: -20, background: "var(--accent-gradient)", width: 12, height: 12, borderRadius: "50%", boxShadow: "0 0 15px var(--accent)" }} />
+            <div className="px32 py12 rounded-2xl border border-gold/30 bg-gold/5" style={{ backdropFilter: "blur(8px)" }}>
+              <p className="text-[12px] font-mono tracking-[0.3em] text-gold font-bold uppercase">Top 7% Global Rank</p>
+            </div>
           </div>
-          <div className="mt24">
-            <span className="badge badge-gold" style={{ padding: "8px 20px", fontSize: 14 }}>TOP 7% GLOBAL RANK</span>
+
+          {/* Decorative Corner Elements */}
+          <div className="absolute top40 left40 flex gap8">
+            <div className="w6 h6 rounded-full" style={{ width: 6, height: 6, background: "var(--accent)", boxShadow: "0 0 10px var(--accent)" }}></div>
+            <div className="w6 h6 rounded-full" style={{ width: 6, height: 6, background: "rgba(255,255,255,0.05)" }}></div>
           </div>
+          <div className="absolute bottom40 right40 text-[10px] font-mono opacity-20 tracking-widest">SCN_REF: 4882-X9</div>
         </div>
 
-        {/* Sub-Metrics Cards */}
-        <div className="col gap12">
+        {/* Right Column: Metric Cards */}
+        <div className="flex flex-col gap16">
           {metrics.map((m) => (
-            <div key={m.label} className="card" style={{ padding: "16px 20px", transition: "transform 0.2s" }}>
-              <div className="flex items-center gap12 mb8">
-                <span style={{ fontSize: 18 }}>{m.icon}</span>
-                <span className="text-sm fw700 text2" style={{ letterSpacing: 1 }}>{m.label.toUpperCase()}</span>
-                <span className="spacer" />
-                <span className="mono text-accent fw700">{m.val}</span>
-                <span style={{ fontSize: 10, color: m.trend === "up" ? "var(--accent3)" : m.trend === "down" ? "var(--accent2)" : "var(--text3)" }}>
-                  {m.trend === "up" ? "▲" : m.trend === "down" ? "▼" : "•"}
-                </span>
+            <div key={m.label} className="metric-card-v2 flex items-center justify-between group" style={{ padding: "20px 28px" }}>
+              <div className="flex items-center gap20">
+                <div className="w56 h56 rounded-3xl flex items-center justify-center transition-transform group-hover:scale-110" style={{ width: 56, height: 56, background: "rgba(255,255,255,0.03)", border: "1px solid rgba(255,255,255,0.05)" }}>
+                  <span className="material-icons-round" style={{ color: m.color, fontSize: 24 }}>{m.icon}</span>
+                </div>
+                <div>
+                  <p className="text-[10px] font-mono tracking-[0.2em] uppercase text2 mb4 group-hover:text-accent transition-colors">{m.label}</p>
+                  <p className="text-3xl font-bold tracking-tight">
+                    {m.val} <span className="text-sm font-normal ml-2" style={{ color: m.trend === "up" ? "#10b981" : m.trend === "down" ? "#ef4444" : "var(--text-mute)" }}>{m.trendChar}</span>
+                  </p>
+                </div>
               </div>
-              <MiniBar val={m.val} color={m.color} showPct={false} />
+              {/* Specialized mini-graph for the first item to add flavor */}
+              {m.label === "Academic Power" && (
+                <div className="h48 w100 bg-white/5 rounded-xl flex items-end justify-between p6" style={{ height: 48, width: 100, background: "rgba(255,255,255,0.02)", padding: 6, border: "1px solid rgba(255,255,255,0.02)" }}>
+                  {[40, 70, 50, 90].map((h, i) => (
+                    <div key={i} className="rounded-sm" style={{ width: 6, height: `${h}%`, background: i === 3 ? "#3b82f6" : "rgba(59, 130, 246, 0.2)", boxShadow: i === 3 ? "0 0 10px rgba(59,130,246,0.5)" : "none" }}></div>
+                  ))}
+                </div>
+              )}
             </div>
           ))}
         </div>
       </div>
 
       {/* Intelligence Briefing Section */}
-      <div className="glass-card mb32" style={{ borderLeft: "4px solid var(--accent2)", padding: "24px 32px" }}>
-        <div className="flex items-center gap12 mb16">
-          <div style={{ width: 8, height: 8, borderRadius: "50%", background: "var(--accent2)", boxShadow: "0 0 10px var(--accent2)" }} />
-          <span className="mono text-xs fw700" style={{ color: "var(--accent2)", letterSpacing: 2 }}>[BRIEFING_SCAN_v4.2]</span>
+      <div className="relative glass-v2 rounded-[3rem] p48 border-white/5 overflow-hidden">
+        <div className="absolute top0 right0 w-80 h-80 bg-primary/5 blur-[120px]" style={{ zIndex: -1 }}></div>
+        <div className="flex flex-col lg:flex-row gap48 items-center">
+          <div className="flex-1">
+            <div className="flex items-center gap12 mb24 font-mono text-xs tracking-widest text-accent">
+              <span className="px10 py3 border border-accent/30 rounded-lg uppercase bg-accent/5">Insight_Engine_v4.2</span>
+              <span className="cursor-blink"></span>
+            </div>
+            <p className="text-xl leading-relaxed text2" style={{ fontFamily: "'Inter', sans-serif", fontWeight: 400 }}>
+              Analysis detected a critical divergence in <span className="text-white font-semibold">Narrative Coherence (65)</span>.
+              While your <span className="text-white font-semibold">Execution Velocity (90)</span> exceeds the 95th percentile,
+              the lack of a unified "archetype" is suppressing your total index. Resolve this to unlock <span className="text-accent font-bold">Top 1% status</span>.
+            </p>
+          </div>
+          <div className="flex flex-col sm:flex-row gap16 shrink-0 w-full lg:w-auto">
+            <button className="btn btn-primary" style={{ padding: "20px 40px", borderRadius: 20, fontSize: 16, boxShadow: "0 20px 50px rgba(59, 130, 246, 0.3)" }} onClick={() => onNav(15)}>
+              Full Radar Analysis <span className="material-icons-round ml-2">auto_awesome</span>
+            </button>
+            <button className="btn btn-secondary" style={{ padding: "20px 40px", borderRadius: 20, fontSize: 16, background: "rgba(255,255,255,0.05)", border: "1px solid rgba(255,255,255,0.1)", color: "#fff" }} onClick={() => onNav(16)}>
+              Peer Benchmarks
+            </button>
+          </div>
         </div>
-        <p className="text-sm text2 mb0" style={{ lineHeight: 1.8, fontFamily: "var(--sans)" }}>
-          Analysis detected a critical divergence in <strong style={{ color: "var(--text)" }}>Narrative Coherence (65)</strong>.
-          While your <strong style={{ color: "var(--accent3)" }}>Execution Velocity (90)</strong> exceeds the 95th percentile,
-          the lack of a unified "archetype" is suppressing your total index. Resolve this to unlock Top 1% status.
-        </p>
-      </div>
-
-      <div className="flex gap12">
-        <button className="btn btn-primary" style={{ padding: "14px 28px" }} onClick={() => onNav(15)}>
-          Deep Radar Analysis ◈
-        </button>
-        <button className="btn btn-secondary" style={{ padding: "14px 28px" }} onClick={() => onNav(16)}>
-          Peer Benchmarking
-        </button>
       </div>
     </div>
   );
