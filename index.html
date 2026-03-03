@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -8,15 +9,16 @@
     <script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
     <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
 </head>
+
 <body>
     <div id="root"></div>
     <script>
         // Error handling
-        window.addEventListener('error', function(e) {
+        window.addEventListener('error', function (e) {
             console.error('JavaScript error:', e.error);
             document.getElementById('root').innerHTML = '<div style="color:red; padding:20px; font-family:monospace;">Error: ' + e.error.message + '</div>';
         });
-        
+
         // Load the JSX file with proper error handling
         fetch('top1pct-os.jsx')
             .then(response => {
@@ -29,7 +31,7 @@
                     presets: ['react', 'env'],
                     plugins: ['transform-modules-umd']
                 }).code;
-                
+
                 // Execute in a try-catch to catch any runtime errors
                 try {
                     eval(transformedCode);
@@ -45,4 +47,5 @@
             });
     </script>
 </body>
+
 </html>

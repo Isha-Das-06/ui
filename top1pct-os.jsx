@@ -594,6 +594,88 @@ const css = `
   ::-webkit-scrollbar-track { background: transparent; }
   ::-webkit-scrollbar-thumb { background: var(--glass-border); border-radius: 3px; }
   ::-webkit-scrollbar-thumb:hover { background: var(--text-mute); }
+
+  /* ────────────────────────────────────────────────────────────────────────────
+     PURE CSS PREMIUM UTILITIES
+     ──────────────────────────────────────────────────────────────────────────── */
+  
+  /* BOX MODEL */
+  .relative { position: relative; }
+  .absolute { position: absolute; }
+  .overflow-hidden { overflow: hidden; }
+  .w-full { width: 100%; }
+  .h-full { height: 100%; }
+  .h-\[440px\] { height: 440px; }
+  
+  /* FLEXBOX */
+  .flex { display: flex; align-items: center; gap: 8px; }
+  .flex-col { display: flex; flex-direction: column; gap: 8px; }
+  .flex-1 { flex: 1; }
+  .shrink-0 { flex-shrink: 0; }
+  .justify-center { justify-content: center; }
+  .justify-between { justify-content: space-between; }
+  .items-center { align-items: center; }
+  .items-start { align-items: flex-start; }
+  .items-baseline { align-items: baseline; }
+  
+  /* GRID */
+  .grid2 { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; }
+  .grid3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; }
+  
+  /* SPACING: GAPS */
+  .gap8 { gap: 8px; } .gap12 { gap: 12px; } .gap16 { gap: 16px; } .gap20 { gap: 20px; } .gap32 { gap: 32px; } .gap48 { gap: 48px; }
+  
+  /* SPACING: MARGINS */
+  .mt8 { margin-top: 8px; } .mt16 { margin-top: 16px; } .mt24 { margin-top: 24px; } .mt32 { margin-top: 32px; } .mt48 { margin-top: 48px; }
+  .mb8 { margin-bottom: 8px; } .mb12 { margin-bottom: 12px; } .mb16 { margin-bottom: 16px; } .mb20 { margin-bottom: 20px; } .mb24 { margin-bottom: 24px; } .mb32 { margin-bottom: 32px; } .mb40 { margin-bottom: 40px; } .mb48 { margin-bottom: 48px; }
+  
+  /* SPACING: PADDING */
+  .p6 { padding: 6px; } .p8 { padding: 8px; } .p12 { padding: 12px; } .p16 { padding: 16px; } .p24 { padding: 24px; } .p32 { padding: 32px; } .p48 { padding: 48px; }
+  .px8 { padding-left: 8px; padding-right: 8px; } .px10 { padding-left: 10px; padding-right: 10px; } .px32 { padding-left: 32px; padding-right: 32px; }
+  .py2 { padding-top: 8px; padding-bottom: 8px; } .py3 { padding-top: 12px; padding-bottom: 12px; } .py12 { padding-top: 12px; padding-bottom: 12px; }
+  
+  /* TYPOGRAPHY */
+  .text-xs { font-size: 11px; } .text-sm { font-size: 13px; } .text-3xl { font-size: 30px; } .text-6xl { font-size: 60px; }
+  .font-mono { font-family: var(--mono); } .font-bold { font-weight: 700; } .font-extrabold { font-weight: 800; }
+  .tracking-tight { letter-spacing: -0.025em; } .tracking-tighter { letter-spacing: -0.05em; } .tracking-widest { letter-spacing: 0.1em; }
+  .uppercase { text-transform: uppercase; }
+  
+  /* ROUNDING */
+  .rounded { border-radius: 8px; } .rounded-lg { border-radius: 12px; } .rounded-2xl { border-radius: 16px; } .rounded-3xl { border-radius: 24px; } .rounded-\[3rem\] { border-radius: 3rem; }
+  
+  /* COLORS & BORDERS */
+  .bg-slate-950 { background: #05070a; }
+  .bg-gold\/5 { background: rgba(251, 191, 36, 0.05); }
+  .bg-accent\/5 { background: rgba(99, 210, 255, 0.05); }
+  .border { border: 1px solid var(--glass-border); }
+  .border-white\/5 { border: 1px solid rgba(255, 255, 255, 0.05); }
+  .border-white\/10 { border: 1px solid rgba(255, 255, 255, 0.1); }
+  .border-accent\/20 { border: 1px solid rgba(99, 210, 255, 0.2); }
+  .border-gold\/30 { border: 1px solid rgba(251, 191, 36, 0.3); }
+  .text-accent { color: var(--accent); } .text-gold { color: var(--gold); } .text-white { color: white; }
+  .opacity-60 { opacity: 0.6; } .opacity-20 { opacity: 0.2; }
+  
+  /* MISC */
+  .cursor-blink::after { content: '_'; animation: blink 1s step-end infinite; color: var(--accent); }
+  .blur-\[120px\] { filter: blur(120px); }
+  .w-80 { width: 320px; } .h-80 { height: 320px; }
+  
+  /* RESPONSIVE & STATE */
+  .group:hover .group-hover\:scale-110 { transform: scale(1.1); }
+  .group:hover .group-hover\:text-accent { color: var(--accent); }
+  .transition-all { transition: all 0.3s var(--transition); }
+  .transition-transform { transition: transform 0.3s var(--transition); }
+  .transition-colors { transition: color 0.3s var(--transition); }
+  
+  .sm\:flex-row { flex-direction: row; }
+  .lg\:flex-row { flex-direction: row; }
+  @media (max-width: 640px) { .sm\:flex-row { flex-direction: column; } }
+  @media (max-width: 1024px) { .lg\:flex-row { flex-direction: column; } }
+
+  .bg-primary\/5 { background: rgba(59, 130, 246, 0.05); }
+  .border-accent\/20 { border: 1px solid rgba(99, 210, 255, 0.2); }
+  .border-accent\/30 { border: 1px solid rgba(99, 210, 255, 0.3); }
+  .text2 { color: var(--text-dim); } .text3 { color: var(--text-mute); }
 `;
 
 // ─── SCROLL REVEAL HOOK ──────────────────────────────────────────────────────
@@ -649,14 +731,13 @@ function RadarChart({ data, size = 200 }) {
 }
 
 // ─── MINI BAR ────────────────────────────────────────────────────────────────
-function MiniBar({ val, color = "blue", showPct = true }) {
-  const fills = { blue: "fill-blue", green: "fill-green", gold: "fill-gold", red: "fill-red", purple: "fill-purple" };
+function MiniBar({ val, color = "accent", showPct = true }) {
   return (
-    <div className="flex items-center gap8">
-      <div className="progress-bar" style={{ flex: 1 }}>
-        <div className={`progress - fill ${fills[color]} `} style={{ width: `${val}% ` }} />
+    <div className="flex items-center gap12 w-full">
+      <div className="h4 rounded-full bg-white/5 overflow-hidden flex-1" style={{ height: 4, background: "rgba(255,255,255,0.05)" }}>
+        <div className="h-full rounded-full transition-all" style={{ width: `${val}%`, background: color === "accent" ? "var(--accent)" : color === "gold" ? "var(--gold)" : color }} />
       </div>
-      {showPct && <span className="mono text-xs text2" style={{ minWidth: 32, textAlign: "right" }}>{val}%</span>}
+      {showPct && <span className="font-mono text-xs text2" style={{ minWidth: 36, textAlign: "right" }}>{val}%</span>}
     </div>
   );
 }
@@ -1300,50 +1381,50 @@ function PageScoreOverview({ onNav }) {
           <span className="px8 py2 border border-accent/20 rounded">SYSTEM_SCAN</span>
           <span className="text3">STATUS: OPTIMIZED</span>
         </div>
-        <h2 className="text-6xl font-extrabold tracking-tighter mb12" style={{ fontFamily: "'Space Grotesk', sans-serif", letterSpacing: "-0.04em" }}>Performance Index</h2>
+        <h2 className="text-6xl font-extrabold tracking-tighter mb12 font-heading">Performance Index</h2>
       </header>
 
-      <div className="grid2 gap32 mb40" style={{ alignItems: "start" }}>
+      <div className="grid2 gap40 mb48 items-start">
         {/* Left Column: Big Score Card */}
-        <div className="relative h-[440px] rounded-[3rem] overflow-hidden bg-slate-950 border border-white/10" style={{ background: "#05070a", display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center" }}>
+        <div className="relative h-[440px] rounded-[3rem] overflow-hidden bg-slate-950 border border-white/10 flex flex-col items-center justify-center">
           <div className="scan-line"></div>
           <div className="relative z-10 flex flex-col items-center">
-            <p className="text-[11px] font-mono tracking-[0.5em] text-accent uppercase mb40 opacity-60">COMPETITIVE_INDEX_v4</p>
+            <p className="text-xs font-mono tracking-[0.5em] text-accent uppercase mb40 opacity-60">COMPETITIVE_INDEX_v4</p>
             <div className="flex items-baseline justify-center mb32">
-              <div className="text-gradient" style={{ fontSize: 160, fontWeight: 800, lineHeight: 0.9, letterSpacing: -10 }}>84</div>
-              <div style={{ fontSize: 32, fontWeight: 300, color: "var(--text-mute)", marginLeft: 4, letterSpacing: -1 }}>/100</div>
+              <div className="text-gradient font-extrabold tracking-tighter" style={{ fontSize: 160, lineHeight: 0.9 }}>84</div>
+              <div className="text-3xl fw300 text3 ml4 tracking-tighter">/100</div>
             </div>
             <div className="px32 py12 rounded-2xl border border-gold/30 bg-gold/5" style={{ backdropFilter: "blur(8px)" }}>
-              <p className="text-[12px] font-mono tracking-[0.3em] text-gold font-bold uppercase">Top 7% Global Rank</p>
+              <p className="text-xs font-mono tracking-[0.3em] text-gold fw700 uppercase">Top 7% Global Rank</p>
             </div>
           </div>
 
           {/* Decorative Corner Elements */}
           <div className="absolute top40 left40 flex gap8">
-            <div className="w6 h6 rounded-full" style={{ width: 6, height: 6, background: "var(--accent)", boxShadow: "0 0 10px var(--accent)" }}></div>
-            <div className="w6 h6 rounded-full" style={{ width: 6, height: 6, background: "rgba(255,255,255,0.05)" }}></div>
+            <div className="w6 h6 rounded-full" style={{ background: "var(--accent)", boxShadow: "0 0 10px var(--accent)" }}></div>
+            <div className="w6 h6 rounded-full bg-white/5"></div>
           </div>
-          <div className="absolute bottom40 right40 text-[10px] font-mono opacity-20 tracking-widest">SCN_REF: 4882-X9</div>
+          <div className="absolute bottom40 right40 text-xs font-mono opacity-20 tracking-widest">SCN_REF: 4882-X9</div>
         </div>
 
         {/* Right Column: Metric Cards */}
         <div className="flex flex-col gap16">
           {metrics.map((m) => (
-            <div key={m.label} className="metric-card-v2 flex items-center justify-between group" style={{ padding: "20px 28px" }}>
+            <div key={m.label} className="metric-card-v2 flex items-center justify-between group p24 transition-all">
               <div className="flex items-center gap20">
-                <div className="w56 h56 rounded-3xl flex items-center justify-center transition-transform group-hover:scale-110" style={{ width: 56, height: 56, background: "rgba(255,255,255,0.03)", border: "1px solid rgba(255,255,255,0.05)" }}>
+                <div className="w56 h56 rounded-2xl flex items-center justify-center transition-transform group-hover:scale-110" style={{ background: "rgba(255,255,255,0.03)", border: "1px solid rgba(255,255,255,0.05)" }}>
                   <span className="material-icons-round" style={{ color: m.color, fontSize: 24 }}>{m.icon}</span>
                 </div>
                 <div>
-                  <p className="text-[10px] font-mono tracking-[0.2em] uppercase text2 mb4 group-hover:text-accent transition-colors">{m.label}</p>
+                  <p className="text-xs font-mono tracking-widest uppercase text2 mb4 group-hover:text-accent transition-colors">{m.label}</p>
                   <p className="text-3xl font-bold tracking-tight">
-                    {m.val} <span className="text-sm font-normal ml-2" style={{ color: m.trend === "up" ? "#10b981" : m.trend === "down" ? "#ef4444" : "var(--text-mute)" }}>{m.trendChar}</span>
+                    {m.val} <span className="text-sm fw400 ml8" style={{ color: m.trend === "up" ? "#10b981" : m.trend === "down" ? "#ef4444" : "var(--text-mute)" }}>{m.trendChar}</span>
                   </p>
                 </div>
               </div>
               {/* Specialized mini-graph for the first item to add flavor */}
               {m.label === "Academic Power" && (
-                <div className="h48 w100 bg-white/5 rounded-xl flex items-end justify-between p6" style={{ height: 48, width: 100, background: "rgba(255,255,255,0.02)", padding: 6, border: "1px solid rgba(255,255,255,0.02)" }}>
+                <div className="h48 w100 bg-white/5 rounded-lg flex items-end justify-between p6 border border-white/5">
                   {[40, 70, 50, 90].map((h, i) => (
                     <div key={i} className="rounded-sm" style={{ width: 6, height: `${h}%`, background: i === 3 ? "#3b82f6" : "rgba(59, 130, 246, 0.2)", boxShadow: i === 3 ? "0 0 10px rgba(59,130,246,0.5)" : "none" }}></div>
                   ))}
@@ -1363,17 +1444,17 @@ function PageScoreOverview({ onNav }) {
               <span className="px10 py3 border border-accent/30 rounded-lg uppercase bg-accent/5">Insight_Engine_v4.2</span>
               <span className="cursor-blink"></span>
             </div>
-            <p className="text-xl leading-relaxed text2" style={{ fontFamily: "'Inter', sans-serif", fontWeight: 400 }}>
-              Analysis detected a critical divergence in <span className="text-white font-semibold">Narrative Coherence (65)</span>.
-              While your <span className="text-white font-semibold">Execution Velocity (90)</span> exceeds the 95th percentile,
-              the lack of a unified "archetype" is suppressing your total index. Resolve this to unlock <span className="text-accent font-bold">Top 1% status</span>.
+            <p className="text-xl leading-relaxed text2 fw400 font-sans">
+              Analysis detected a critical divergence in <span className="text-white fw600">Narrative Coherence (65)</span>.
+              While your <span className="text-white fw600">Execution Velocity (90)</span> exceeds the 95th percentile,
+              the lack of a unified "archetype" is suppressing your total index. Resolve this to unlock <span className="text-accent fw700">Top 1% status</span>.
             </p>
           </div>
           <div className="flex flex-col sm:flex-row gap16 shrink-0 w-full lg:w-auto">
-            <button className="btn btn-primary" style={{ padding: "20px 40px", borderRadius: 20, fontSize: 16, boxShadow: "0 20px 50px rgba(59, 130, 246, 0.3)" }} onClick={() => onNav(15)}>
-              Full Radar Analysis <span className="material-icons-round ml-2">auto_awesome</span>
+            <button className="btn btn-primary px32 py12 rounded-xl text-base" style={{ boxShadow: "0 20px 50px rgba(59, 130, 246, 0.3)" }} onClick={() => onNav(15)}>
+              Full Radar Analysis <span className="material-icons-round ml8">auto_awesome</span>
             </button>
-            <button className="btn btn-secondary" style={{ padding: "20px 40px", borderRadius: 20, fontSize: 16, background: "rgba(255,255,255,0.05)", border: "1px solid rgba(255,255,255,0.1)", color: "#fff" }} onClick={() => onNav(16)}>
+            <button className="btn transition-all px32 py12 rounded-xl text-base" style={{ background: "rgba(255,255,255,0.05)", border: "1px solid rgba(255,255,255,0.1)", color: "#fff" }} onClick={() => onNav(16)}>
               Peer Benchmarks
             </button>
           </div>
